@@ -1,7 +1,12 @@
 export class BookInput {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
-  element: HTMLFormElement;
+  formElement: HTMLFormElement;
+
+  titleInputElement: HTMLInputElement;
+  authorInputElement: HTMLInputElement;
+  categoryInputElement: HTMLInputElement;
+  ratingInputElement: HTMLInputElement;
 
   constructor() {
     this.templateElement = document.getElementById(
@@ -14,11 +19,41 @@ export class BookInput {
       true
     );
 
-    this.element = importedNode.firstElementChild as HTMLFormElement;
+    this.formElement = importedNode.firstElementChild as HTMLFormElement;
+
+    this.titleInputElement = this.formElement.querySelector(
+      '#title'
+    ) as HTMLInputElement;
+
+    this.authorInputElement = this.formElement.querySelector(
+      '#author'
+    ) as HTMLInputElement;
+
+    this.categoryInputElement = this.formElement.querySelector(
+      '#category'
+    ) as HTMLInputElement;
+
+    this.ratingInputElement = this.formElement.querySelector(
+      '#rating'
+    ) as HTMLInputElement;
+
+    this.configure();
     this.attach();
   }
 
+  private submitHandler(event: Event) {
+    event.preventDefault();
+    console.log(this.titleInputElement.value);
+    console.log(this.authorInputElement.value);
+    console.log(this.categoryInputElement.value);
+    console.log(this.ratingInputElement.value);
+  }
+
+  configure() {
+    this.formElement.addEventListener('submit', this.submitHandler.bind(this));
+  }
+
   private attach() {
-    this.hostElement.insertAdjacentElement('afterbegin', this.element);
+    this.hostElement.insertAdjacentElement('afterbegin', this.formElement);
   }
 }
