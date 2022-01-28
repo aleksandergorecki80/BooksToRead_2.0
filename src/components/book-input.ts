@@ -1,7 +1,11 @@
+// Add VALIDATION !!!
+
+import { Autobind } from '../decorators/autobind';
+
 export class BookInput {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
-  formElement: HTMLFormElement;
+  element: HTMLFormElement;
 
   titleInputElement: HTMLInputElement;
   authorInputElement: HTMLInputElement;
@@ -19,21 +23,21 @@ export class BookInput {
       true
     );
 
-    this.formElement = importedNode.firstElementChild as HTMLFormElement;
+    this.element = importedNode.firstElementChild as HTMLFormElement;
 
-    this.titleInputElement = this.formElement.querySelector(
+    this.titleInputElement = this.element.querySelector(
       '#title'
     ) as HTMLInputElement;
 
-    this.authorInputElement = this.formElement.querySelector(
+    this.authorInputElement = this.element.querySelector(
       '#author'
     ) as HTMLInputElement;
 
-    this.categoryInputElement = this.formElement.querySelector(
+    this.categoryInputElement = this.element.querySelector(
       '#category'
     ) as HTMLInputElement;
 
-    this.ratingInputElement = this.formElement.querySelector(
+    this.ratingInputElement = this.element.querySelector(
       '#rating'
     ) as HTMLInputElement;
 
@@ -41,19 +45,50 @@ export class BookInput {
     this.attach();
   }
 
-  private submitHandler(event: Event) {
-    event.preventDefault();
-    console.log(this.titleInputElement.value);
-    console.log(this.authorInputElement.value);
-    console.log(this.categoryInputElement.value);
-    console.log(this.ratingInputElement.value);
+  private gatherUserInput(): [string, string, string, number] | void {
+    const enteredTitle = this.titleInputElement.value;
+    const enteredAuthor = this.authorInputElement.value;
+    const enteredCategory = this.categoryInputElement.value;
+    const enteredRating = this.ratingInputElement.value;
+
+    // Add VALIDATION HERE
+
+    return [
+      enteredTitle,
+      enteredAuthor,
+      enteredCategory,
+      parseInt(enteredRating),
+    ];
   }
 
-  configure() {
-    this.formElement.addEventListener('submit', this.submitHandler.bind(this));
+  @Autobind
+  private submitHandler(event: Event) {
+    event.preventDefault();
+    const userInput = this.gatherUserInput();
+
+    console.log(userInput);
+
+    if (Array.isArray(userInput)) {
+      const [title, author, category, rating] = userInput;
+      console.log(title, author, category, rating);
+    } else {
+      throw new Error('Please fill in the form');
+    }
+    this.clearInputs();
+  }
+
+  private clearInputs() {
+    this.titleInputElement.value = '';
+    this.authorInputElement.value = '';
+    this.categoryInputElement.value = '';
+    this.ratingInputElement.value = '';
+  }
+
+  private configure() {
+    this.element.addEventListener('submit', this.submitHandler);
   }
 
   private attach() {
-    this.hostElement.insertAdjacentElement('afterbegin', this.formElement);
+    this.hostElement.insertAdjacentElement('afterbegin', this.element);
   }
 }
