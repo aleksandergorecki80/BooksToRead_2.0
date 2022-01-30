@@ -1,5 +1,6 @@
 import { booksState, Book } from '../state/books-state';
 import { BaseComponent } from './base-component';
+import { BookItem } from './book-item';
 
 export class BookList extends BaseComponent<
   HTMLDivElement,
@@ -27,9 +28,13 @@ export class BookList extends BaseComponent<
     const listEl = document.getElementById('books-list')! as HTMLUListElement;
     listEl.innerHTML = '';
     for (const bookItem of this.addedBooks) {
-      const listItem = document.createElement('li');
-      listItem.textContent = bookItem.title;
-      listEl.appendChild(listItem);
+      // const listItem = document.createElement('li');
+      // listItem.textContent = bookItem.title;
+
+      const listItem = new BookItem(bookItem);
+
+      console.log(listItem, 'list item');
+      // listEl.appendChild(listItem);
     }
   }
 
