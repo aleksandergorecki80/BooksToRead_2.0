@@ -6,8 +6,6 @@ export class BookItem extends BaseComponent<HTMLUListElement, HTMLLIElement> {
   constructor(book: Book) {
     super('single-book', 'books-list', true);
     this.book = book;
-    console.log(this.book, 'this.book');
-
     this.configure();
     this.renderContent();
   }

@@ -28,13 +28,7 @@ export class BookList extends BaseComponent<
     const listEl = document.getElementById('books-list')! as HTMLUListElement;
     listEl.innerHTML = '';
     for (const bookItem of this.addedBooks) {
-      // const listItem = document.createElement('li');
-      // listItem.textContent = bookItem.title;
-
-      const listItem = new BookItem(bookItem);
-
-      console.log(listItem, 'list item');
-      // listEl.appendChild(listItem);
+      new BookItem(bookItem);
     }
   }
 
