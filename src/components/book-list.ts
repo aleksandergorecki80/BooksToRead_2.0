@@ -1,24 +1,16 @@
 import { booksState, Book } from '../state/books-state';
+import { BaseComponent } from './base-component';
 
-export class BookList {
-  templateElement: HTMLTemplateElement;
-  hostElement: HTMLDivElement;
-  element: HTMLElement;
+export class BookList extends BaseComponent<
+  HTMLDivElement,
+  HTMLTemplateElement
+> {
   addedBooks: Book[];
 
   constructor(private sectionTitle: string) {
-    this.templateElement = document.getElementById(
-      'books-list-template'
-    )! as HTMLTemplateElement;
-    this.hostElement = document.getElementById('app') as HTMLDivElement;
+    super('books-list-template', 'app', true);
+
     this.addedBooks = [];
-
-    const importedNode = document.importNode(
-      this.templateElement.content,
-      true
-    );
-
-    this.element = importedNode.firstElementChild as HTMLElement;
 
     booksState.addListener((books: Book[]) => {
       // TU DODAJ FILTROWANIE
@@ -41,11 +33,13 @@ export class BookList {
     }
   }
 
-  private renderContent() {
+  configure(): void {}
+
+  renderContent() {
     this.element.querySelector('h2')!.textContent = this.sectionTitle;
   }
 
-  private attach() {
+  attach() {
     this.hostElement.insertAdjacentElement('beforeend', this.element);
   }
 }

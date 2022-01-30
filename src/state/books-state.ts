@@ -11,12 +11,24 @@ export class Book {
   ) {}
 }
 
-export class BooksState {
-  private listeners: any[] = [];
+type Listeners<T> = (items: T[]) => void;
+
+class State<T> {
+  protected listeners: Listeners<T>[] = [];
+
+  addListener(listenerFn: Listeners<T>) {
+    this.listeners.push(listenerFn);
+    console.log(this.listeners);
+  }
+}
+
+export class BooksState extends State<Book> {
   private projects: Book[] = [];
   private static instance: BooksState;
 
-  private constructor() {}
+  private constructor() {
+    super();
+  }
 
   static getInstance() {
     if (this.instance) {
@@ -25,11 +37,6 @@ export class BooksState {
       this.instance = new BooksState();
       return this.instance;
     }
-  }
-
-  addListener(listenerFn: Function) {
-    this.listeners.push(listenerFn);
-    console.log(this.listeners);
   }
 
   addBook(title: string, author: string, category: string, rating: number) {

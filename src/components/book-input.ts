@@ -5,10 +5,6 @@ import { booksState } from '../state/books-state';
 import { BaseComponent } from './base-component';
 
 export class BookInput extends BaseComponent<HTMLDivElement, HTMLFormElement> {
-  // templateElement: HTMLTemplateElement;
-  // hostElement: HTMLDivElement;
-  // element: HTMLFormElement;
-
   titleInputElement: HTMLInputElement;
   authorInputElement: HTMLInputElement;
   categoryInputElement: HTMLInputElement;
@@ -16,17 +12,6 @@ export class BookInput extends BaseComponent<HTMLDivElement, HTMLFormElement> {
 
   constructor() {
     super('book-input', 'app', true);
-    // this.templateElement = document.getElementById(
-    //   'book-input'
-    // )! as HTMLTemplateElement;
-    // this.hostElement = document.getElementById('app')! as HTMLDivElement;
-
-    // const importedNode = document.importNode(
-    //   this.templateElement.content,
-    //   true
-    // );
-
-    // this.element = importedNode.firstElementChild as HTMLFormElement;
 
     this.titleInputElement = this.element.querySelector(
       '#title'
@@ -89,7 +74,5 @@ export class BookInput extends BaseComponent<HTMLDivElement, HTMLFormElement> {
     this.element.addEventListener('submit', this.submitHandler);
   }
 
-  // private attach() {
-  //   this.hostElement.insertAdjacentElement('afterbegin', this.element);
-  // }
+  renderContent(): void {}
 }

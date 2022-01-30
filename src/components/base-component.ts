@@ -34,5 +34,5 @@ export abstract class BaseComponent<
   }
 
   abstract configure(): void;
-  //   abstract renderContent(): void;
+  abstract renderContent(): void;
 }
