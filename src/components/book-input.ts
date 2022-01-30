@@ -1,11 +1,13 @@
 // Add VALIDATION !!!
 
 import { Autobind } from '../decorators/autobind';
+import { booksState } from '../state/books-state';
+import { BaseComponent } from './base-component';
 
-export class BookInput {
-  templateElement: HTMLTemplateElement;
-  hostElement: HTMLDivElement;
-  element: HTMLFormElement;
+export class BookInput extends BaseComponent<HTMLDivElement, HTMLFormElement> {
+  // templateElement: HTMLTemplateElement;
+  // hostElement: HTMLDivElement;
+  // element: HTMLFormElement;
 
   titleInputElement: HTMLInputElement;
   authorInputElement: HTMLInputElement;
@@ -13,17 +15,18 @@ export class BookInput {
   ratingInputElement: HTMLInputElement;
 
   constructor() {
-    this.templateElement = document.getElementById(
-      'book-input'
-    )! as HTMLTemplateElement;
-    this.hostElement = document.getElementById('app')! as HTMLDivElement;
+    super('book-input', 'app', true);
+    // this.templateElement = document.getElementById(
+    //   'book-input'
+    // )! as HTMLTemplateElement;
+    // this.hostElement = document.getElementById('app')! as HTMLDivElement;
 
-    const importedNode = document.importNode(
-      this.templateElement.content,
-      true
-    );
+    // const importedNode = document.importNode(
+    //   this.templateElement.content,
+    //   true
+    // );
 
-    this.element = importedNode.firstElementChild as HTMLFormElement;
+    // this.element = importedNode.firstElementChild as HTMLFormElement;
 
     this.titleInputElement = this.element.querySelector(
       '#title'
@@ -42,7 +45,7 @@ export class BookInput {
     ) as HTMLInputElement;
 
     this.configure();
-    this.attach();
+    // this.attach();
   }
 
   private gatherUserInput(): [string, string, string, number] | void {
@@ -66,11 +69,9 @@ export class BookInput {
     event.preventDefault();
     const userInput = this.gatherUserInput();
 
-    console.log(userInput);
-
     if (Array.isArray(userInput)) {
       const [title, author, category, rating] = userInput;
-      console.log(title, author, category, rating);
+      booksState.addBook(title, author, category, rating);
     } else {
       throw new Error('Please fill in the form');
     }
@@ -84,11 +85,11 @@ export class BookInput {
     this.ratingInputElement.value = '';
   }
 
-  private configure() {
+  configure() {
     this.element.addEventListener('submit', this.submitHandler);
   }
 
-  private attach() {
-    this.hostElement.insertAdjacentElement('afterbegin', this.element);
-  }
+  // private attach() {
+  //   this.hostElement.insertAdjacentElement('afterbegin', this.element);
+  // }
 }
