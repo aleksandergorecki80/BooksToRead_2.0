@@ -11,7 +11,7 @@ export class BookList extends BaseComponent<
   constructor(private sectionTitle: string) {
     super('books-list-template', 'app', true);
 
-    this.addedBooks = [];
+    this.addedBooks = booksState.localBooksData;
 
     booksState.addListener((books: Book[]) => {
       // TU DODAJ FILTROWANIE
@@ -19,7 +19,7 @@ export class BookList extends BaseComponent<
       this.addedBooks = books;
       this.renderBooks();
     });
-
+    this.renderBooks();
     this.attach();
     this.renderContent();
   }

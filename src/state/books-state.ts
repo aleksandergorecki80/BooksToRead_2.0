@@ -18,16 +18,22 @@ class State<T> {
 
   addListener(listenerFn: Listeners<T>) {
     this.listeners.push(listenerFn);
-    console.log(this.listeners);
   }
 }
 
 export class BooksState extends State<Book> {
-  private projects: Book[] = [];
+  private books: Book[] = [];
   private static instance: BooksState;
+
+  get localBooksData() {
+    const localBooksData = localStorage.getItem('books');
+    return localBooksData ? JSON.parse(localBooksData) : [];
+  }
 
   private constructor() {
     super();
+    this.books = this.localBooksData;
+    this.updateListeners();
   }
 
   static getInstance() {
@@ -39,15 +45,22 @@ export class BooksState extends State<Book> {
     }
   }
 
+  updateLocalStorage() {
+    return localStorage.setItem('books', JSON.stringify(this.books));
+  }
+
+  updateListeners() {
+    for (const listenerFn of this.listeners) {
+      listenerFn(this.books.slice());
+    }
+  }
+
   addBook(title: string, author: string, category: string, rating: number) {
     const id = uuidv4();
     const newBook = new Book(id, title, author, category, rating);
-    this.projects.push(newBook);
-    for (const listenerFn of this.listeners) {
-      console.log(listenerFn);
-      listenerFn(this.projects.slice());
-    }
-    console.log(this.listeners);
+    this.books.push(newBook);
+    this.updateListeners();
+    this.updateLocalStorage();
   }
 }
 
