@@ -9,6 +9,7 @@ export class BookInput extends BaseComponent<HTMLDivElement, HTMLFormElement> {
   authorInputElement: HTMLInputElement;
   categoryInputElement: HTMLInputElement;
   ratingInputElement: HTMLInputElement;
+  idElement: HTMLInputElement;
 
   constructor() {
     super('book-input', 'app', true);
@@ -29,15 +30,20 @@ export class BookInput extends BaseComponent<HTMLDivElement, HTMLFormElement> {
       '#rating'
     ) as HTMLInputElement;
 
+    this.idElement = this.element.querySelector('#id')! as HTMLInputElement;
+
     this.configure();
     // this.attach();
   }
 
-  private gatherUserInput(): [string, string, string, number] | void {
+  private gatherUserInput():
+    | [string, string, string, number, string | undefined]
+    | void {
     const enteredTitle = this.titleInputElement.value;
     const enteredAuthor = this.authorInputElement.value;
     const enteredCategory = this.categoryInputElement.value;
     const enteredRating = this.ratingInputElement.value;
+    const enteredId = this.idElement.value;
 
     // Add VALIDATION HERE
 
@@ -46,6 +52,7 @@ export class BookInput extends BaseComponent<HTMLDivElement, HTMLFormElement> {
       enteredAuthor,
       enteredCategory,
       parseInt(enteredRating),
+      enteredId,
     ];
   }
 
@@ -55,12 +62,21 @@ export class BookInput extends BaseComponent<HTMLDivElement, HTMLFormElement> {
     const userInput = this.gatherUserInput();
 
     if (Array.isArray(userInput)) {
-      const [title, author, category, rating] = userInput;
-      booksState.addBook(title, author, category, rating);
+      const [title, author, category, rating, id] = userInput;
+
+      if (booksState.returnEditMode()) {
+        booksState.editBook(title, author, category, rating, id);
+      } else {
+        booksState.addBook(title, author, category, rating);
+      }
     } else {
       throw new Error('Please fill in the form');
     }
+    booksState.switchEditMode();
     this.clearInputs();
+
+    const button = document.getElementById('submit')! as HTMLInputElement;
+    button.value = 'ADD BOOK';
   }
 
   private clearInputs() {

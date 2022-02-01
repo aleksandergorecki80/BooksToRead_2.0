@@ -10,6 +10,7 @@
   <body>
     <template id="book-input">
       <form id="input-form">
+        <input type="hidden" id="id"> 
         <div class="form-control">
           <label for="title">Title</label>
           <input type="text" id="title" />
@@ -31,7 +32,7 @@
           <label for="quantity">Quantity (between 1 and 5):</label>
           <input type="number" id="rating" name="rating" min="1" max="5">
         </div>
-        <button type="submit">ADD BOOK</button>
+        <input id="submit" type="submit" value="ADD BOOK" />
       </form>
     </template>
     <template id="single-book">
@@ -40,7 +41,8 @@
         <h3></h3>
         <h4></h4>
         <p></p>
-        <button>DELETE</button>
+        <button id='edit'>EDIT</button>
+        <button id='delete'>DELETE</button>
       </li>
     </template>
     <template id="books-list-template">

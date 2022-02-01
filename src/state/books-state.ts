@@ -24,6 +24,7 @@ class State<T> {
 
 export class BooksState extends State<Book> {
   private books: Book[] = [];
+  private editMode: boolean = false;
   private static instance: BooksState;
 
   get localBooksData() {
@@ -50,6 +51,14 @@ export class BooksState extends State<Book> {
     return localStorage.setItem('books', JSON.stringify(this.books));
   }
 
+  switchEditMode() {
+    this.editMode = !this.editMode;
+  }
+
+  returnEditMode() {
+    return this.editMode;
+  }
+
   updateListeners() {
     for (const listenerFn of this.listeners) {
       listenerFn(this.books.slice());
@@ -70,6 +79,17 @@ export class BooksState extends State<Book> {
     this.books.push(newBook);
     this.updateListeners();
     this.updateLocalStorage();
+  }
+
+  editBook(
+    title: string,
+    author: string,
+    category: string,
+    rating: number,
+    id: string | undefined
+  ) {
+    console.log(id, title, author, category, rating);
+    console.log(booksState);
   }
 }
 

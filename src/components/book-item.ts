@@ -17,10 +17,37 @@ export class BookItem extends BaseComponent<HTMLUListElement, HTMLLIElement> {
     booksState.deleteBook(this.book.id);
   }
 
+  @Autobind
+  private editHendler(): void {
+    const title = document.getElementById('title')! as HTMLInputElement;
+    const author = document.getElementById('author')! as HTMLInputElement;
+    const category = document.getElementById('category')! as HTMLSelectElement;
+    const rating = document.getElementById('rating')! as HTMLInputElement;
+    const id = document.getElementById('id')! as HTMLInputElement;
+
+    // INSERTING BOOK'S DATA INTO THE FORM
+    title.value = this.book.title;
+    author.value = this.book.author;
+    category.value = this.book.category;
+    rating.value = this.book.rating.toString();
+    id.value = this.book.id;
+
+    const button = document.getElementById('submit')! as HTMLInputElement;
+    console.log(button);
+    button.value = 'EDIT BOOK';
+
+    booksState.switchEditMode();
+    console.log(booksState);
+  }
+
   configure(): void {
     this.element
-      .querySelector('button')!
+      .querySelector('#delete')!
       .addEventListener('click', this.deleteHandler);
+
+    this.element
+      .querySelector('#edit')!
+      .addEventListener('click', this.editHendler);
   }
 
   renderContent(): void {
