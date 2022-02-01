@@ -14,7 +14,8 @@ export class Book {
 type Listeners<T> = (items: T[]) => void;
 
 class State<T> {
-  protected listeners: Listeners<T>[] = [];
+  // protected listeners: Listeners<T>[] = [];
+  listeners: Listeners<T>[] = [];
 
   addListener(listenerFn: Listeners<T>) {
     this.listeners.push(listenerFn);
@@ -53,6 +54,14 @@ export class BooksState extends State<Book> {
     for (const listenerFn of this.listeners) {
       listenerFn(this.books.slice());
     }
+  }
+
+  deleteBook(id: string): void {
+    const booksUpdated: Book[] = this.books.filter((book) => book.id !== id);
+    this.books = booksUpdated;
+
+    this.updateListeners();
+    this.updateLocalStorage();
   }
 
   addBook(title: string, author: string, category: string, rating: number) {
