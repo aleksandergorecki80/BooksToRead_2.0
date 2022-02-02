@@ -38,6 +38,11 @@ export class BookItem extends BaseComponent<HTMLUListElement, HTMLLIElement> {
     booksState.switchEditMode();
   }
 
+  @Autobind
+  private selectAuthorHendler(): void {
+    console.log('selectAuthorHendler');
+  }
+
   configure(): void {
     this.element
       .querySelector('#delete')!
@@ -46,6 +51,10 @@ export class BookItem extends BaseComponent<HTMLUListElement, HTMLLIElement> {
     this.element
       .querySelector('#edit')!
       .addEventListener('click', this.editHendler);
+
+    this.element
+      .querySelector('#author')!
+      .addEventListener('click', this.selectAuthorHendler);
   }
 
   renderContent(): void {
