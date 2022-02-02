@@ -33,11 +33,9 @@ export class BookItem extends BaseComponent<HTMLUListElement, HTMLLIElement> {
     id.value = this.book.id;
 
     const button = document.getElementById('submit')! as HTMLInputElement;
-    console.log(button);
     button.value = 'EDIT BOOK';
 
     booksState.switchEditMode();
-    console.log(booksState);
   }
 
   configure(): void {

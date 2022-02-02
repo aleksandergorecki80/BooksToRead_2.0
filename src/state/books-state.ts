@@ -88,8 +88,20 @@ export class BooksState extends State<Book> {
     rating: number,
     id: string | undefined
   ) {
-    console.log(id, title, author, category, rating);
-    console.log(booksState);
+    const updatedBooks = this.books.map((book) => {
+      const updatedBook = {
+        id: book.id,
+        title,
+        author,
+        category,
+        rating,
+      };
+      return book.id === id ? updatedBook : book;
+    });
+
+    this.books = updatedBooks;
+    this.updateListeners();
+    this.updateLocalStorage();
   }
 }
 
