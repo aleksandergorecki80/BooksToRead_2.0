@@ -14,7 +14,6 @@
   "license": "ISC",
   "devDependencies": {
     "sass": "^1.49.7",
-    "sass-loader": "^12.4.0",
     "ts-loader": "^6.2.1",
     "typescript": "^3.7.2",
     "webpack": "^4.46.0",
@@ -22,6 +21,9 @@
     "webpack-dev-server": "^3.9.0"
   },
   "dependencies": {
+    "css-loader": "^5.2.7",
+    "sass-loader": "^10.1.1",
+    "style-loader": "^2.0.0",
     "uuid": "^8.3.2"
   }
 }
