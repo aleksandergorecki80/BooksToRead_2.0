@@ -21,7 +21,16 @@ export class BookList extends BaseComponent<
     });
     this.renderBooks();
     this.attach();
+    this.configure();
     this.renderContent();
+  }
+
+  filterResults(value: string) {
+    const filteredBooks = this.addedBooks.filter(
+      (book) => book.author === value
+    );
+    this.addedBooks = filteredBooks;
+    this.renderBooks();
   }
 
   renderBooks() {

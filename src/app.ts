@@ -3,4 +3,4 @@ import { BookList } from './components/book-list';
 import './style.scss';
 
 new BookInput();
-new BookList('All titles');
+export const bookList = new BookList('All titles');

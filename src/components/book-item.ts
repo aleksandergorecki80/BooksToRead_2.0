@@ -2,6 +2,7 @@ import { Autobind } from '../decorators/autobind';
 import { Book } from '../state/books-state';
 import { BaseComponent } from './base-component';
 import { booksState } from '../state/books-state';
+import { bookList } from '../app';
 
 export class BookItem extends BaseComponent<HTMLUListElement, HTMLLIElement> {
   private book: Book;
@@ -19,6 +20,7 @@ export class BookItem extends BaseComponent<HTMLUListElement, HTMLLIElement> {
 
   @Autobind
   private editHendler(): void {
+    console.log(this.book);
     const title = document.getElementById('title')! as HTMLInputElement;
     const author = document.getElementById('author')! as HTMLInputElement;
     const category = document.getElementById('category')! as HTMLSelectElement;
@@ -33,14 +35,15 @@ export class BookItem extends BaseComponent<HTMLUListElement, HTMLLIElement> {
     id.value = this.book.id;
 
     const button = document.getElementById('submit')! as HTMLInputElement;
-    button.value = 'EDIT BOOK';
+    button.value = 'UPDATE BOOK';
 
     booksState.switchEditMode();
   }
 
   @Autobind
   private selectAuthorHendler(): void {
-    console.log('selectAuthorHendler');
+    const authorSelected = this.element.querySelector('h3')!.innerText;
+    bookList.filterResults(authorSelected);
   }
 
   configure(): void {
@@ -53,7 +56,7 @@ export class BookItem extends BaseComponent<HTMLUListElement, HTMLLIElement> {
       .addEventListener('click', this.editHendler);
 
     this.element
-      .querySelector('#author')!
+      .querySelector('h3')!
       .addEventListener('click', this.selectAuthorHendler);
   }
 

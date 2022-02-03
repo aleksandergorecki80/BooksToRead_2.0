@@ -1,3 +1,24 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     background-color: aqua;
+}
+
+.linked {
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.container {
+    width: 960px;
+    margin: 0 auto;
+}
+
+ul {
+    list-style-type: none;
 }
