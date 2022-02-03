@@ -20,7 +20,6 @@ export class BookItem extends BaseComponent<HTMLUListElement, HTMLLIElement> {
 
   @Autobind
   private editHendler(): void {
-    console.log(this.book);
     const title = document.getElementById('title')! as HTMLInputElement;
     const author = document.getElementById('author')! as HTMLInputElement;
     const category = document.getElementById('category')! as HTMLSelectElement;
@@ -41,9 +40,12 @@ export class BookItem extends BaseComponent<HTMLUListElement, HTMLLIElement> {
   }
 
   @Autobind
-  private selectAuthorHendler(): void {
-    const authorSelected = this.element.querySelector('h3')!.innerText;
-    bookList.filterResults(authorSelected);
+  private selectedFilterHendler(e: Event): void {
+    const element = e.target as HTMLElement;
+    const tagName = element.tagName;
+    const filterSelected = this.element.querySelector(tagName)! as HTMLElement;
+    const value = filterSelected.innerText.toString();
+    bookList.filterResults(value, tagName);
   }
 
   configure(): void {
@@ -57,7 +59,15 @@ export class BookItem extends BaseComponent<HTMLUListElement, HTMLLIElement> {
 
     this.element
       .querySelector('h3')!
-      .addEventListener('click', this.selectAuthorHendler);
+      .addEventListener('click', this.selectedFilterHendler);
+
+    this.element
+      .querySelector('h4')!
+      .addEventListener('click', this.selectedFilterHendler);
+
+    this.element
+      .querySelector('p')!
+      .addEventListener('click', this.selectedFilterHendler);
   }
 
   renderContent(): void {

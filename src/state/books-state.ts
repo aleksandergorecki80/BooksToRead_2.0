@@ -47,6 +47,10 @@ export class BooksState extends State<Book> {
     }
   }
 
+  get allBooks() {
+    return this.books;
+  }
+
   updateLocalStorage() {
     return localStorage.setItem('books', JSON.stringify(this.books));
   }
@@ -59,9 +63,9 @@ export class BooksState extends State<Book> {
     return this.editMode;
   }
 
-  updateListeners() {
+  updateListeners(items: Book[] = this.books) {
     for (const listenerFn of this.listeners) {
-      listenerFn(this.books.slice());
+      listenerFn(items.slice());
     }
   }
 
