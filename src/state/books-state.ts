@@ -107,6 +107,20 @@ export class BooksState extends State<Book> {
     this.updateListeners();
     this.updateLocalStorage();
   }
+
+  sortByTitle() {
+    return this.books.sort(this.compareTitles);
+  }
+
+  compareTitles(a: Book, b: Book) {
+    if (a.title < b.title) {
+      return 1;
+    }
+    if (a.title > b.title) {
+      return -1;
+    }
+    return 0;
+  }
 }
 
 export const booksState = BooksState.getInstance();

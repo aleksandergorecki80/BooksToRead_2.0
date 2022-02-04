@@ -15,8 +15,6 @@ export class BookList extends BaseComponent<
     this.addedBooks = booksState.localBooksData;
 
     booksState.addListener((books: Book[]) => {
-      // TU DODAJ FILTROWANIE
-
       this.addedBooks = books;
       this.renderBooks();
     });
@@ -50,6 +48,34 @@ export class BookList extends BaseComponent<
     this.renderBooks();
   }
 
+  @Autobind
+  sortSelectHandler() {
+    const selectedElement = document.getElementById(
+      'sortBy'
+    )! as HTMLInputElement;
+    const selectedValue = selectedElement.value;
+    const sortBooks = () => {
+      switch (selectedValue) {
+        case 'title':
+          return booksState.sortByTitle();
+        // case 'author':
+        //   console.log('sort by author');
+        //   return this.addedBooks;
+        // case 'rating':
+        //   console.log('sort by rating');
+        //   return;
+        default:
+          return this.addedBooks;
+      }
+    };
+
+    const sortedBooks = sortBooks();
+    booksState.updateListeners(sortedBooks);
+    this.addedBooks = sortedBooks;
+
+    this.renderBooks();
+  }
+
   renderBooks() {
     const listEl = document.getElementById('books-list')! as HTMLUListElement;
     listEl.innerHTML = '';
@@ -62,6 +88,9 @@ export class BookList extends BaseComponent<
     this.element
       .querySelector('h2')!
       .addEventListener('click', this.allBookHandler);
+    this.element
+      .querySelector('#sortBy')!
+      .addEventListener('change', this.sortSelectHandler);
   }
 
   renderContent() {
