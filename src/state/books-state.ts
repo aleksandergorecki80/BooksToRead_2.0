@@ -108,18 +108,16 @@ export class BooksState extends State<Book> {
     this.updateLocalStorage();
   }
 
-  sortByTitle() {
-    return this.books.sort(this.compareTitles);
-  }
-
-  compareTitles(a: Book, b: Book) {
-    if (a.title < b.title) {
-      return 1;
-    }
-    if (a.title > b.title) {
-      return -1;
-    }
-    return 0;
+  sortBy(option: string | number) {
+    return this.books.sort((a: Book, b: Book) => {
+      if (a[option as keyof Book] < b[option as keyof Book]) {
+        return 1;
+      }
+      if (a[option as keyof Book] > b[option as keyof Book]) {
+        return -1;
+      }
+      return 0;
+    });
   }
 }
 

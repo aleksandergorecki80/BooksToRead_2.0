@@ -54,25 +54,15 @@ export class BookList extends BaseComponent<
       'sortBy'
     )! as HTMLInputElement;
     const selectedValue = selectedElement.value;
-    const sortBooks = () => {
-      switch (selectedValue) {
-        case 'title':
-          return booksState.sortByTitle();
-        // case 'author':
-        //   console.log('sort by author');
-        //   return this.addedBooks;
-        // case 'rating':
-        //   console.log('sort by rating');
-        //   return;
-        default:
-          return this.addedBooks;
-      }
-    };
 
-    const sortedBooks = sortBooks();
+    let sortedBooks: Book[];
+    sortedBooks = booksState.sortBy(selectedValue);
+    if (selectedValue === 'rating') {
+      sortedBooks.reverse();
+    }
+
     booksState.updateListeners(sortedBooks);
     this.addedBooks = sortedBooks;
-
     this.renderBooks();
   }
 
