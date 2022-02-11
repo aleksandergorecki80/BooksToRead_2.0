@@ -3,6 +3,7 @@
 import { Autobind } from '../decorators/autobind';
 import { booksState } from '../state/books-state';
 import { BaseComponent } from './base-component';
+// import { regExPatterns } from '../utils/regExPatterns';
 
 export class BookInput extends BaseComponent<HTMLDivElement, HTMLFormElement> {
   titleInputElement: HTMLInputElement;
@@ -57,6 +58,29 @@ export class BookInput extends BaseComponent<HTMLDivElement, HTMLFormElement> {
   }
 
   @Autobind
+  private validateInput(e: Event): boolean {
+    const element = e.target as HTMLInputElement;
+
+    switch (element.id) {
+      case 'title':
+        console.log(element.id);
+        break;
+      case 'author':
+        console.log(element.id);
+        break;
+      case 'category':
+        console.log(element.id);
+        break;
+        break;
+      case 'rating':
+        console.log(element.id);
+        break;
+    }
+
+    return true;
+  }
+
+  @Autobind
   private submitHandler(event: Event) {
     event.preventDefault();
     const userInput = this.gatherUserInput();
@@ -64,19 +88,21 @@ export class BookInput extends BaseComponent<HTMLDivElement, HTMLFormElement> {
     if (Array.isArray(userInput)) {
       const [title, author, category, rating, id] = userInput;
 
-      if (booksState.returnEditMode()) {
-        booksState.editBook(title, author, category, rating, id);
-      } else {
-        booksState.addBook(title, author, category, rating);
-      }
-    } else {
-      throw new Error('Please fill in the form');
-    }
-    booksState.switchEditMode();
-    this.clearInputs();
+      if (title) {
+        if (booksState.returnEditMode()) {
+          booksState.editBook(title, author, category, rating, id);
+        } else {
+          booksState.addBook(title, author, category, rating);
+        }
+        booksState.switchEditMode();
+        this.clearInputs();
 
-    const button = document.getElementById('submit')! as HTMLInputElement;
-    button.value = 'ADD BOOK';
+        const button = document.getElementById('submit')! as HTMLInputElement;
+        button.value = 'ADD BOOK';
+      } else {
+        throw new Error('Please fill in the form');
+      }
+    }
   }
 
   private clearInputs() {
@@ -88,6 +114,10 @@ export class BookInput extends BaseComponent<HTMLDivElement, HTMLFormElement> {
 
   configure() {
     this.element.addEventListener('submit', this.submitHandler);
+    this.titleInputElement.addEventListener('keyup', this.validateInput);
+    this.authorInputElement.addEventListener('keyup', this.validateInput);
+    this.categoryInputElement.addEventListener('change', this.validateInput);
+    this.ratingInputElement.addEventListener('change', this.validateInput);
   }
 
   renderContent(): void {}

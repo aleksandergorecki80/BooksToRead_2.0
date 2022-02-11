@@ -1,0 +1,21 @@
+label {
+    display: block;
+}
+
+input {
+    padding: 20px;
+    border: 2px solid $border-color;
+    border-radius: 4px;
+    width: 90%;
+    &:focus {
+        background-color: $input-backround-color__focus;
+        outline: none;
+        border: 2px solid $border-color__focus;
+    }
+}
+
+.input-error {
+    background-color: $input-backround-color__error;
+    outline: none;
+    border: 2px solid $input-border-color__error;
+}
