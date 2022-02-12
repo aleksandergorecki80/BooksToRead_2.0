@@ -12,6 +12,8 @@ export class BookInput extends BaseComponent<HTMLDivElement, HTMLFormElement> {
   ratingInputElement: HTMLInputElement;
   idElement: HTMLInputElement;
 
+  validationSuccess: boolean = false;
+
   constructor() {
     super('book-input', 'app', true);
 
@@ -83,12 +85,12 @@ export class BookInput extends BaseComponent<HTMLDivElement, HTMLFormElement> {
   @Autobind
   private submitHandler(event: Event) {
     event.preventDefault();
-    const userInput = this.gatherUserInput();
 
-    if (Array.isArray(userInput)) {
-      const [title, author, category, rating, id] = userInput;
+    if (this.validationSuccess) {
+      const userInput = this.gatherUserInput();
+      if (Array.isArray(userInput)) {
+        const [title, author, category, rating, id] = userInput;
 
-      if (title) {
         if (booksState.returnEditMode()) {
           booksState.editBook(title, author, category, rating, id);
         } else {
@@ -99,9 +101,9 @@ export class BookInput extends BaseComponent<HTMLDivElement, HTMLFormElement> {
 
         const button = document.getElementById('submit')! as HTMLInputElement;
         button.value = 'ADD BOOK';
-      } else {
-        throw new Error('Please fill in the form');
       }
+    } else {
+      throw new Error('Please fill in the form');
     }
   }
 
