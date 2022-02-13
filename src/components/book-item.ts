@@ -20,6 +20,13 @@ export class BookItem extends BaseComponent<HTMLUListElement, HTMLLIElement> {
 
   @Autobind
   private editHendler(): void {
+    if (!booksState.returnEditMode()) {
+      booksState.switchEditMode();
+    }
+
+    const button = document.getElementById('submit')! as HTMLInputElement;
+    button.value = 'UPDATE BOOK';
+
     const title = document.getElementById('title')! as HTMLInputElement;
     const author = document.getElementById('author')! as HTMLInputElement;
     const category = document.getElementById('category')! as HTMLSelectElement;
@@ -33,12 +40,7 @@ export class BookItem extends BaseComponent<HTMLUListElement, HTMLLIElement> {
     rating.value = this.book.rating.toString();
     id.value = this.book.id;
 
-    const button = document.getElementById('submit')! as HTMLInputElement;
-    button.value = 'UPDATE BOOK';
-
     bookInput.runAllValidations();
-
-    booksState.switchEditMode();
   }
 
   @Autobind

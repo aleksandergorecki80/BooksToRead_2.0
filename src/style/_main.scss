@@ -7,3 +7,10 @@ $input-border-color__error: #c92a2a;
 $button-background-color: #12b886;
 $button-background-hover: #0ca678;
 $button-background-focus: #099268;
+
+@import url("https://fonts.googleapis.com/css2?family=Alumni+Sans:wght@300;400;500&family=Source+Sans+Pro:wght@300;400;600;700&display=swap");
+
+body {
+    font-family: "Alumni Sans", sans-serif;
+    font-family: "Source Sans Pro", sans-serif;
+}

@@ -12,17 +12,17 @@
       <form id="input-form">
         <input type="hidden" id="id"> 
         <div class="form-control">
-          <label for="title">Title</label>
-          <input type="text" id="title" placeholder="Title"/>
+          <label for="title">Title:</label>
+          <input type="text" id="title" placeholder="Enter title"/>
         </div>
         <div class="form-control">
-          <label for="author">Author</label>
-          <input type="text" id="author" placeholder="Author"/>
+          <label for="author">Author:</label>
+          <input type="text" id="author" placeholder="Enter author"/>
         </div>
         <div class="form-control">
-          <label for="category">Choose a category:</label>
+          <label for="category">Category:</label>
           <select name="category" id="category" class="select">
-            <option value="">-- Chose a category --</option>
+            <option value=""  disabled selected class="select-placeholder">-- Chose a category --</option>
             <option value="fantasy">Fantasy</option>
             <option value="poetry">Poetry</option>
             <option value="drama">Drama</option>
@@ -30,10 +30,10 @@
         </div>
         <div class="form-control rating-container">
           <label for="quantity">
-            <p>Please select how much do you want to read this book.</p>
+            <p>How much do you want to read this book.</p>
             <p>Quantity (between 1 and 5):</p>
           </label>
-          <input type="number" id="rating" name="rating" min="1" max="5" placeholder="5">
+          <input type="number" id="rating" name="rating" min="1" max="5" />
         </div>
         <input id="submit" type="submit" value="ADD BOOK" class="submit"/>
       </form>

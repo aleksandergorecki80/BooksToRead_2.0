@@ -132,10 +132,11 @@ export class BookInput extends BaseComponent<HTMLDivElement, HTMLFormElement> {
 
         if (booksState.returnEditMode()) {
           booksState.editBook(title, author, category, rating, id);
+
+          booksState.switchEditMode();
         } else {
           booksState.addBook(title, author, category, rating);
         }
-        booksState.switchEditMode();
         this.clearInputs();
 
         const button = document.getElementById('submit')! as HTMLInputElement;

@@ -20,6 +20,22 @@ input[type="number"] {
     width: 30%;
 }
 
+label[for="quantity"] {
+    font-size: 14px;
+}
+
+select:required:invalid {
+    color: gray;
+}
+option[value=""][disabled] {
+    color: red;
+    display: none;
+}
+
+.select-placeholder {
+    color: red;
+}
+
 .input-error {
     background-color: $input-backround-color__error;
     outline: none;
@@ -51,6 +67,8 @@ input[type="number"] {
 
 .rating-container {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .form-control {
