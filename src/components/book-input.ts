@@ -1,16 +1,6 @@
-// Add VALIDATION !!!
-
 import { Autobind } from '../decorators/autobind';
 import { booksState } from '../state/books-state';
 import { BaseComponent } from './base-component';
-// import { regExPatterns, validate } from '../utils/validation';
-
-interface errorsObject {
-  titleError: boolean;
-  authorError: boolean;
-  categoryError: boolean;
-  ratingError: boolean;
-}
 
 export class BookInput extends BaseComponent<HTMLDivElement, HTMLFormElement> {
   titleInputElement: HTMLInputElement;
@@ -18,13 +8,6 @@ export class BookInput extends BaseComponent<HTMLDivElement, HTMLFormElement> {
   categoryInputElement: HTMLInputElement;
   ratingInputElement: HTMLInputElement;
   idElement: HTMLInputElement;
-
-  validationErrors: errorsObject = {
-    titleError: true,
-    authorError: true,
-    categoryError: true,
-    ratingError: true,
-  };
 
   constructor() {
     super('book-input', 'app', true);
@@ -60,8 +43,6 @@ export class BookInput extends BaseComponent<HTMLDivElement, HTMLFormElement> {
     const enteredRating = this.ratingInputElement.value;
     const enteredId = this.idElement.value;
 
-    // Add VALIDATION HERE
-
     return [
       enteredTitle,
       enteredAuthor,
@@ -81,53 +62,62 @@ export class BookInput extends BaseComponent<HTMLDivElement, HTMLFormElement> {
     }
   }
 
-  // private setErrorsStatus(inputField: boolean, result: boolean) {
-  //   result ? (inputField = false) : (inputField = true);
-  // }
+  //  VALIDATION
+
+  runAllValidations() {
+    const titleRegex = /^[a-ząĄćĆĘęŁłŃńÓóŚśŹźŻż\d\s]{3,150}$/gi;
+    const authorRegex = /^[a-ząĄćĆĘęŁłŃńÓóŚśŹźŻż\d\s]{3,150}$/gi;
+    const categoryRegex = /^fantasy|poetry|drama$/;
+    const ratingRegex = /^[1-5]$/;
+
+    const validateTitle = this.validation(this.titleInputElement, titleRegex);
+    const validateAuthor = this.validation(
+      this.authorInputElement,
+      authorRegex
+    );
+    const validateCategory = this.validation(
+      this.categoryInputElement,
+      categoryRegex
+    );
+    const validateRating = this.validation(
+      this.ratingInputElement,
+      ratingRegex
+    );
+    return (
+      validateTitle && validateAuthor && validateCategory && validateRating
+    );
+  }
 
   @Autobind
-  private validateInput(e: Event): boolean {
+  private validation(inputElement: HTMLInputElement, regEx: any): boolean {
+    const result = regEx.test(inputElement.value);
+    this.useCSSStyles(inputElement, result);
+    return result;
+  }
+
+  @Autobind
+  private validateInputs(e: Event): boolean {
     const element = e.target as HTMLInputElement;
 
     switch (element.id) {
       case 'title':
         const titleRegex = /^[a-ząĄćĆĘęŁłŃńÓóŚśŹźŻż\d\s]{3,150}$/gi;
-        const titleResult = titleRegex.test(this.titleInputElement.value);
-        this.useCSSStyles(this.titleInputElement, titleResult);
-        titleResult
-          ? (this.validationErrors.titleError = false)
-          : (this.validationErrors.titleError = true);
+        this.validation(this.titleInputElement, titleRegex);
         break;
       case 'author':
         const authorRegex = /^[a-ząĄćĆĘęŁłŃńÓóŚśŹźŻż\d\s]{3,150}$/gi;
-        const authorResult = authorRegex.test(this.authorInputElement.value);
-        this.useCSSStyles(this.authorInputElement, authorResult);
-        authorResult
-          ? (this.validationErrors.authorError = false)
-          : (this.validationErrors.authorError = true);
+        this.validation(this.authorInputElement, authorRegex);
         break;
       case 'category':
         const categoryRegex = /^fantasy|poetry|drama$/;
-        // console.log(this.categoryInputElement.value);
-        const categoryResult = categoryRegex.test(
-          this.categoryInputElement.value
-        );
-        this.useCSSStyles(this.categoryInputElement, categoryResult);
-        categoryResult
-          ? (this.validationErrors.categoryError = false)
-          : (this.validationErrors.categoryError = true);
+        this.validation(this.categoryInputElement, categoryRegex);
         break;
       case 'rating':
-        console.log(this.ratingInputElement.value);
         const ratingRegex = /^[1-5]$/;
-        const ratingResult = ratingRegex.test(this.ratingInputElement.value);
-        this.useCSSStyles(this.ratingInputElement, ratingResult);
-        ratingResult
-          ? (this.validationErrors.ratingError = false)
-          : (this.validationErrors.ratingError = true);
+        this.validation(this.ratingInputElement, ratingRegex);
         break;
     }
-    console.log(this.validationErrors);
+
     return true;
   }
 
@@ -135,12 +125,7 @@ export class BookInput extends BaseComponent<HTMLDivElement, HTMLFormElement> {
   private submitHandler(event: Event) {
     event.preventDefault();
 
-    if (
-      !this.validationErrors.titleError &&
-      !this.validationErrors.authorError &&
-      !this.validationErrors.categoryError &&
-      !this.validationErrors.ratingError
-    ) {
+    if (this.runAllValidations()) {
       const userInput = this.gatherUserInput();
       if (Array.isArray(userInput)) {
         const [title, author, category, rating, id] = userInput;
@@ -173,17 +158,16 @@ export class BookInput extends BaseComponent<HTMLDivElement, HTMLFormElement> {
     this.element.addEventListener('submit', this.submitHandler);
 
     // INPUTS LISTENERS
-    this.titleInputElement.addEventListener('keyup', this.validateInput);
+    this.titleInputElement.addEventListener('keyup', this.validateInputs);
     this.titleInputElement.addEventListener('blur', () => {
       if (this.titleInputElement.value === '') {
         this.titleInputElement.classList.remove('input-error');
       }
     });
 
-    this.authorInputElement.addEventListener('keyup', this.validateInput);
-    this.categoryInputElement.addEventListener('change', this.validateInput);
-    // this.ratingInputElement.addEventListener('change', this.validateInput);
-    this.ratingInputElement.addEventListener('keyup', this.validateInput);
+    this.authorInputElement.addEventListener('keyup', this.validateInputs);
+    this.categoryInputElement.addEventListener('change', this.validateInputs);
+    this.ratingInputElement.addEventListener('change', this.validateInputs);
   }
 
   renderContent(): void {}

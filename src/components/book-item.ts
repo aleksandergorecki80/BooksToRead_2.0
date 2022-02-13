@@ -2,7 +2,7 @@ import { Autobind } from '../decorators/autobind';
 import { Book } from '../state/books-state';
 import { BaseComponent } from './base-component';
 import { booksState } from '../state/books-state';
-import { bookList } from '../app';
+import { bookList, bookInput } from '../app';
 
 export class BookItem extends BaseComponent<HTMLUListElement, HTMLLIElement> {
   private book: Book;
@@ -35,6 +35,8 @@ export class BookItem extends BaseComponent<HTMLUListElement, HTMLLIElement> {
 
     const button = document.getElementById('submit')! as HTMLInputElement;
     button.value = 'UPDATE BOOK';
+
+    bookInput.runAllValidations();
 
     booksState.switchEditMode();
   }
