@@ -166,8 +166,25 @@ export class BookInput extends BaseComponent<HTMLDivElement, HTMLFormElement> {
     });
 
     this.authorInputElement.addEventListener('keyup', this.validateInputs);
+    this.authorInputElement.addEventListener('blur', () => {
+      if (this.authorInputElement.value === '') {
+        this.authorInputElement.classList.remove('input-error');
+      }
+    });
+
     this.categoryInputElement.addEventListener('change', this.validateInputs);
+    this.categoryInputElement.addEventListener('blur', () => {
+      if (this.categoryInputElement.value === '') {
+        this.categoryInputElement.classList.remove('input-error');
+      }
+    });
+
     this.ratingInputElement.addEventListener('change', this.validateInputs);
+    this.ratingInputElement.addEventListener('blur', () => {
+      if (this.ratingInputElement.value === '') {
+        this.ratingInputElement.classList.remove('input-error');
+      }
+    });
   }
 
   renderContent(): void {}

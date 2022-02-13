@@ -2,16 +2,22 @@ label {
     display: block;
 }
 
-input {
+input,
+.select {
     padding: 20px;
     border: 2px solid $border-color;
     border-radius: 4px;
-    width: 90%;
+    width: 100%;
+    text-align: center;
     &:focus {
         background-color: $input-backround-color__focus;
         outline: none;
         // border: 2px solid $border-color__focus;
     }
+}
+
+input[type="number"] {
+    width: 30%;
 }
 
 .input-error {
@@ -24,4 +30,29 @@ input {
     // background-color: $input-backround-color__error;
     outline: none;
     border: 2px solid $border-color__success;
+}
+
+.submit {
+    color: $main-light;
+    font-size: large;
+    cursor: pointer;
+    border: none;
+    background-color: $button-background-color;
+    &:hover {
+        background-color: $button-background-hover;
+    }
+    &:active {
+        background-color: $button-background-color;
+    }
+    &:focus {
+        background-color: $button-background-focus;
+    }
+}
+
+.rating-container {
+    display: flex;
+}
+
+.form-control {
+    margin-bottom: 20px;
 }
