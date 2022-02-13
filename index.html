@@ -22,6 +22,7 @@
         <div class="form-control">
           <label for="category">Choose a category:</label>
           <select name="category" id="category">
+            <option value="">-- Chose a category --</option>
             <option value="fantasy">Fantasy</option>
             <option value="poetry">Poetry</option>
             <option value="drama">Drama</option>
@@ -30,7 +31,7 @@
         <div class="form-control">
           <p>Please select how much do you want to read this book:</p>
           <label for="quantity">Quantity (between 1 and 5):</label>
-          <input type="number" id="rating" name="rating" min="1" max="5">
+          <input type="text" id="rating" name="rating" min="1" max="5">
         </div>
         <input id="submit" type="submit" value="ADD BOOK" />
       </form>

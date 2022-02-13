@@ -3,7 +3,14 @@
 import { Autobind } from '../decorators/autobind';
 import { booksState } from '../state/books-state';
 import { BaseComponent } from './base-component';
-// import { regExPatterns } from '../utils/regExPatterns';
+// import { regExPatterns, validate } from '../utils/validation';
+
+interface errorsObject {
+  titleError: boolean;
+  authorError: boolean;
+  categoryError: boolean;
+  ratingError: boolean;
+}
 
 export class BookInput extends BaseComponent<HTMLDivElement, HTMLFormElement> {
   titleInputElement: HTMLInputElement;
@@ -12,7 +19,12 @@ export class BookInput extends BaseComponent<HTMLDivElement, HTMLFormElement> {
   ratingInputElement: HTMLInputElement;
   idElement: HTMLInputElement;
 
-  validationSuccess: boolean = false;
+  validationErrors: errorsObject = {
+    titleError: true,
+    authorError: true,
+    categoryError: true,
+    ratingError: true,
+  };
 
   constructor() {
     super('book-input', 'app', true);
@@ -59,26 +71,63 @@ export class BookInput extends BaseComponent<HTMLDivElement, HTMLFormElement> {
     ];
   }
 
+  private useCSSStyles(element: HTMLInputElement, result: boolean): void {
+    if (result) {
+      element.classList.remove('input-error');
+      element.classList.add('input-success');
+    } else {
+      element.classList.remove('input-success');
+      element.classList.add('input-error');
+    }
+  }
+
+  // private setErrorsStatus(inputField: boolean, result: boolean) {
+  //   result ? (inputField = false) : (inputField = true);
+  // }
+
   @Autobind
   private validateInput(e: Event): boolean {
     const element = e.target as HTMLInputElement;
 
     switch (element.id) {
       case 'title':
-        console.log(element.id);
+        const titleRegex = /^[a-ząĄćĆĘęŁłŃńÓóŚśŹźŻż\d\s]{3,150}$/gi;
+        const titleResult = titleRegex.test(this.titleInputElement.value);
+        this.useCSSStyles(this.titleInputElement, titleResult);
+        titleResult
+          ? (this.validationErrors.titleError = false)
+          : (this.validationErrors.titleError = true);
         break;
       case 'author':
-        console.log(element.id);
+        const authorRegex = /^[a-ząĄćĆĘęŁłŃńÓóŚśŹźŻż\d\s]{3,150}$/gi;
+        const authorResult = authorRegex.test(this.authorInputElement.value);
+        this.useCSSStyles(this.authorInputElement, authorResult);
+        authorResult
+          ? (this.validationErrors.authorError = false)
+          : (this.validationErrors.authorError = true);
         break;
       case 'category':
-        console.log(element.id);
-        break;
+        const categoryRegex = /^fantasy|poetry|drama$/;
+        // console.log(this.categoryInputElement.value);
+        const categoryResult = categoryRegex.test(
+          this.categoryInputElement.value
+        );
+        this.useCSSStyles(this.categoryInputElement, categoryResult);
+        categoryResult
+          ? (this.validationErrors.categoryError = false)
+          : (this.validationErrors.categoryError = true);
         break;
       case 'rating':
-        console.log(element.id);
+        console.log(this.ratingInputElement.value);
+        const ratingRegex = /^[1-5]$/;
+        const ratingResult = ratingRegex.test(this.ratingInputElement.value);
+        this.useCSSStyles(this.ratingInputElement, ratingResult);
+        ratingResult
+          ? (this.validationErrors.ratingError = false)
+          : (this.validationErrors.ratingError = true);
         break;
     }
-
+    console.log(this.validationErrors);
     return true;
   }
 
@@ -86,7 +135,12 @@ export class BookInput extends BaseComponent<HTMLDivElement, HTMLFormElement> {
   private submitHandler(event: Event) {
     event.preventDefault();
 
-    if (this.validationSuccess) {
+    if (
+      !this.validationErrors.titleError &&
+      !this.validationErrors.authorError &&
+      !this.validationErrors.categoryError &&
+      !this.validationErrors.ratingError
+    ) {
       const userInput = this.gatherUserInput();
       if (Array.isArray(userInput)) {
         const [title, author, category, rating, id] = userInput;
@@ -115,11 +169,21 @@ export class BookInput extends BaseComponent<HTMLDivElement, HTMLFormElement> {
   }
 
   configure() {
+    // FORM LISTENER
     this.element.addEventListener('submit', this.submitHandler);
+
+    // INPUTS LISTENERS
     this.titleInputElement.addEventListener('keyup', this.validateInput);
+    this.titleInputElement.addEventListener('blur', () => {
+      if (this.titleInputElement.value === '') {
+        this.titleInputElement.classList.remove('input-error');
+      }
+    });
+
     this.authorInputElement.addEventListener('keyup', this.validateInput);
     this.categoryInputElement.addEventListener('change', this.validateInput);
-    this.ratingInputElement.addEventListener('change', this.validateInput);
+    // this.ratingInputElement.addEventListener('change', this.validateInput);
+    this.ratingInputElement.addEventListener('keyup', this.validateInput);
   }
 
   renderContent(): void {}
