@@ -4,11 +4,11 @@ label {
 
 input,
 .select {
+    text-align: left;
     padding: 20px;
     border: 2px solid $border-color;
     border-radius: 4px;
     width: 100%;
-    text-align: center;
     &:focus {
         background-color: $input-backround-color__focus;
         outline: none;

@@ -1,0 +1,17 @@
+.btn {
+    border: none;
+    padding: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    .card-select {
+        padding: 8px;
+        width: auto;
+        text-align: left;
+    }
+}

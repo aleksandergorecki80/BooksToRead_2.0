@@ -9,7 +9,7 @@ export class BookList extends BaseComponent<
 > {
   addedBooks: Book[];
 
-  constructor(private sectionTitle: string) {
+  constructor() {
     super('books-list-template', 'app', true);
 
     this.addedBooks = booksState.localBooksData;
@@ -76,16 +76,14 @@ export class BookList extends BaseComponent<
 
   configure(): void {
     this.element
-      .querySelector('h2')!
+      .querySelector('#show-all')!
       .addEventListener('click', this.allBookHandler);
     this.element
       .querySelector('#sortBy')!
       .addEventListener('change', this.sortSelectHandler);
   }
 
-  renderContent() {
-    this.element.querySelector('h2')!.textContent = this.sectionTitle;
-  }
+  renderContent() {}
 
   attach() {
     this.hostElement.insertAdjacentElement('beforeend', this.element);
