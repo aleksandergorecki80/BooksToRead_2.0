@@ -32,11 +32,11 @@ export class BookList extends BaseComponent<
   filterResults(value?: string, filterName?: string) {
     const filteredBooks = booksState.allBooks.filter((book) => {
       switch (filterName) {
-        case 'H3':
+        case 'author-container':
           return book.author === value;
-        case 'H4':
+        case 'category-container':
           return book.category === value;
-        case 'P':
+        case 'rating-container':
           return book.rating.toString() === value;
         default:
           return book;

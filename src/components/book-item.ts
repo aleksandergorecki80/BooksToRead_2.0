@@ -46,10 +46,15 @@ export class BookItem extends BaseComponent<HTMLUListElement, HTMLLIElement> {
   @Autobind
   private selectedFilterHendler(e: Event): void {
     const element = e.target as HTMLElement;
-    const tagName = element.tagName;
-    const filterSelected = this.element.querySelector(tagName)! as HTMLElement;
+    console.log(element.id);
+    // const tagName = element.tagName;
+    const filterSelected = this.element.querySelector(
+      `#${element.id}`
+    )! as HTMLElement;
     const value = filterSelected.innerText.toString();
-    bookList.filterResults(value, tagName);
+    console.log(value, 'value');
+    console.log(element.id, 'element.id');
+    bookList.filterResults(value, element.id);
   }
 
   configure(): void {
@@ -62,23 +67,33 @@ export class BookItem extends BaseComponent<HTMLUListElement, HTMLLIElement> {
       .addEventListener('click', this.editHendler);
 
     this.element
-      .querySelector('h3')!
+      .querySelector('#author-container')!
       .addEventListener('click', this.selectedFilterHendler);
 
     this.element
-      .querySelector('h4')!
+      .querySelector('#category-container')!
       .addEventListener('click', this.selectedFilterHendler);
 
     this.element
-      .querySelector('p')!
+      .querySelector('#rating-container')!
       .addEventListener('click', this.selectedFilterHendler);
   }
 
   renderContent(): void {
-    this.element.querySelector('h2')!.textContent = this.book.title;
-    this.element.querySelector('h3')!.textContent = this.book.author;
-    this.element.querySelector('h4')!.textContent = this.book.category;
-    this.element.querySelector('p')!.textContent = this.book.rating.toString();
+    // this.element.querySelector('h2')!.textContent = this.book.title;
+    // this.element.querySelector('h3')!.textContent = this.book.author;
+    // this.element.querySelector('h4')!.textContent = this.book.category;
+    // this.element.querySelector('p')!.textContent = this.book.rating.toString();
+
+    this.element.querySelector('#title-container')!.textContent =
+      this.book.title;
+    this.element.querySelector('#author-container')!.textContent =
+      this.book.author;
+    this.element.querySelector('#category-container')!.textContent =
+      this.book.category;
+    this.element.querySelector('#rating-container')!.textContent =
+      this.book.rating.toString();
+
     // this.element
     //   .querySelector('button')!
     //   .setAttribute('data-id', this.book.id.toString());

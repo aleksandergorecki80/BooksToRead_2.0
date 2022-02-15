@@ -9,9 +9,12 @@
     // border: 1px solid red;
 }
 
-.linked {
+a {
+    text-decoration: none;
+    color: $main-font-color;
     &:hover {
         cursor: pointer;
+        text-decoration: underline;
     }
 }
 
