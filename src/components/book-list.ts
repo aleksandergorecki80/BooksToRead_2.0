@@ -69,8 +69,13 @@ export class BookList extends BaseComponent<
   renderBooks() {
     const listEl = document.getElementById('books-list')! as HTMLUListElement;
     listEl.innerHTML = '';
-    for (const bookItem of this.addedBooks) {
-      new BookItem(bookItem);
+
+    if (this.addedBooks.length === 0) {
+      listEl.innerHTML = '<p class="no-books-added">No books added yet.<p>';
+    } else {
+      for (const bookItem of this.addedBooks) {
+        new BookItem(bookItem);
+      }
     }
   }
 
