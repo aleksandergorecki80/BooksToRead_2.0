@@ -67,7 +67,7 @@ export class BookInput extends BaseComponent<HTMLDivElement, HTMLFormElement> {
   runAllValidations() {
     const titleRegex = /^[a-ząĄćĆĘęŁłŃńÓóŚśŹźŻż\d\s]{3,150}$/gi;
     const authorRegex = /^[a-ząĄćĆĘęŁłŃńÓóŚśŹźŻż\d\s]{3,150}$/gi;
-    const categoryRegex = /^fantasy|poetry|drama$/;
+    const categoryRegex = /^fantasy|poetry|drama|romance|sci-fi|mystery$/;
     const ratingRegex = /^[1-5]$/;
 
     const validateTitle = this.validation(this.titleInputElement, titleRegex);
@@ -109,7 +109,7 @@ export class BookInput extends BaseComponent<HTMLDivElement, HTMLFormElement> {
         this.validation(this.authorInputElement, authorRegex);
         break;
       case 'category':
-        const categoryRegex = /^fantasy|poetry|drama$/;
+        const categoryRegex = /^fantasy|poetry|drama|romance|sci-fi|mystery$/;
         this.validation(this.categoryInputElement, categoryRegex);
         break;
       case 'rating':
