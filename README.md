@@ -41,5 +41,6 @@ The website is available on: [BooksToRead_2.0](https://aleksandergorecki80.githu
 ## Tools and technologies
 
 - TypeScript
+- Sass
 - NPM 6.14.5
 - Node v16.13.2
