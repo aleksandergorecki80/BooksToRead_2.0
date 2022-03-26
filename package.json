@@ -4,7 +4,7 @@
   "description": "TypeScript application. Make a list of books to read",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "gh-pages -d dist",
     "start": "webpack-dev-server"
   },
   "keywords": [
@@ -12,6 +12,7 @@
   ],
   "author": "Aleksander Górecki",
   "license": "ISC",
+  "homepage": "https://aleksandergorecki80.github.io/BooksToRead_2.0",
   "devDependencies": {
     "sass": "^1.49.7",
     "ts-loader": "^6.2.1",
@@ -22,6 +23,7 @@
   },
   "dependencies": {
     "css-loader": "^5.2.7",
+    "gh-pages": "^3.2.3",
     "sass-loader": "^10.1.1",
     "style-loader": "^2.0.0",
     "uuid": "^8.3.2"
