@@ -38,8 +38,8 @@ Open [http://localhost:8080](http://localhost:8080) to view it in the browser.
 
 The website is available on: [BooksToRead_2.0](https://aleksandergorecki80.github.io/BooksToRead_2.0/)
 
-## Tools
+## Tools and technologies
 
-- [Create React App](https://github.com/facebook/create-react-app).
+- TypeScript
 - NPM 6.14.5
 - Node v16.13.2
