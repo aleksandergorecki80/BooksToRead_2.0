@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = env => {
-  const environment = env || "production";
+  const environment = env || "development";
   const output = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
