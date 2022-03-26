@@ -27,7 +27,7 @@ This instals all dependencies.
 In the project directory, you can run:
 
 ```
-npm run start-dev
+npm start
 ```
 
 to run the app in the development mode.
@@ -36,7 +36,7 @@ Open [http://localhost:8080](http://localhost:8080) to view it in the browser.
 
 ## Live preview
 
-The website is available on: [BooksToRead_2.0](https://aleksandergorecki80.github.io/BooksToRead_2.0)
+The website is available on: [BooksToRead_2.0](https://aleksandergorecki80.github.io/BooksToRead_2.0/)
 
 ## Tools
 

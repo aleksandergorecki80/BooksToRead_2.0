@@ -4,7 +4,8 @@
   "description": "TypeScript application. Make a list of books to read",
   "main": "app.js",
   "scripts": {
-    "deploy": "gh-pages -d dist",
+    "deploy": "gh-pages -d build",
+    "build": "webpack --env production",
     "start": "webpack-dev-server"
   },
   "keywords": [
